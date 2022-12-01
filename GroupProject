@@ -1,8 +1,44 @@
 
-ASSSALAMALIKUM
-THIS IS DANIAL NASIR
-This is waqar
-fafawfwaf
-fwafwafawfwa
-werwerw
-zvzv
+using UnityEngine;
+using System.Collections;
+ 
+public class PlayerControllerPath : MonoBehaviour 
+{
+    public GameObject Path;  
+PathMover pathScript; 
+    public GameObject targetVector; 
+    public int wayIndex;
+    public float speed;
+   
+    // Use this for initialization
+    void Start () {
+        wayIndex = 0;
+        pathScript = Path.GetComponent<PathMover>();
+        targetVector = pathScript.WayPoints[wayIndex];
+    }
+   
+    
+    void Update () {
+        if(Input.GetKey(KeyCode.Space))        {
+            speed = 0;
+            this.rigidbody.drag = 20;
+        }
+        else  d
+{
+            speed = 2f;
+            this.rigidbody.drag = 0;
+        }
+       
+        if(wayIndex <= pathScript.WayPoints.Length-1) 
+        {
+            if(Vector3.Distance(this.transform.position, targetVector.transform.position) < 1f) 
+            {  
+                targetVector = pathScript.WayPoints[wayIndex]; // set new target-waypoint              
+wayIndex++;
+            }
+        }  
+ 
+        this.transform.LookAt(targetVector.transform.position); // look at current target-waypoint     
+this.transform.position = Vector3.Slerp(this.transform.position, targetVector.transform.position, Time.deltaTime * speed); 
+    }
+}
